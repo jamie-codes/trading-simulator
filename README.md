@@ -1,2 +1,13 @@
-# trading-simulator
-A mock trading platform deployed on Kubernetes using the free AWS service (AWS EKS), implementing monitoring, logging, and scaling features.
+# Kubernetes-Based Trading System Simulator
+
+This project demonstrates the deployment of a mock trading system on Kubernetes, with monitoring, logging, and auto-scaling features. It is designed to simulate a production-like environment, using Kubernetes, Docker, AWS, and monitoring tools.
+
+---
+
+## **Project Overview**
+
+The goal of this project is to:
+1. Deploy a Python-based trading simulator on Kubernetes.
+2. Set up monitoring and logging to ensure system reliability.
+3. Implement auto-scaling to handle varying workloads.
+4. Simulate high trading activity and optimize system performance.
