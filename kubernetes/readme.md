@@ -3,8 +3,8 @@
 bash
 Copy
 Edit
-docker build -t myregistry/trading-simulator:1.0 .
-docker push myregistry/trading-simulator:1.0
+docker build -t jamiecodes/trading-simulator:1.0 .
+docker push jamiecodes/trading-simulator:1.0
 
 #Apply Kubernetes manifests
 
