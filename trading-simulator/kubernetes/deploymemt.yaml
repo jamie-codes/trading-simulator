@@ -1,0 +1,30 @@
+# kubernetes/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trading-simulator
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: trading-simulator
+  template:
+    metadata:
+      labels:
+        app: trading-simulator
+    spec:
+      containers:
+      - name: trading-simulator
+        image: myregistry/trading-simulator:1.0
+        ports:
+        - containerPort: 8000
+        env:
+        - name: PROD
+          value: "1"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
