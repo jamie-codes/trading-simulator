@@ -20,3 +20,9 @@ The goal of this project is to:
 - **AWS EKS/EC2**: For hosting the Kubernetes cluster.
 - **Docker**: For containerizing the trading application.
 - **Python**: For the trading simulator.
+
+## **To be added (14/02/2025)**
+
+- **Prometheus & Grafana**: For monitoring system performance.
+- **Fluentd/EFK Stack**: For centralized logging.
+- **Helm**: For deploying monitoring tools.
