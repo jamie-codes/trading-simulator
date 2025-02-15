@@ -105,7 +105,7 @@ The goal of this project is to:
 - Verify the configuration:
   ```bash
   kubectl config current-context
- ```
+
 ---
 
 ## **To be added (14/02/2025)**
