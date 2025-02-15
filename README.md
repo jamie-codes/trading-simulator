@@ -113,3 +113,4 @@ The goal of this project is to:
 - **Prometheus & Grafana**: For monitoring system performance.
 - **Fluentd/EFK Stack**: For centralized logging.
 - **Helm**: For deploying monitoring tools.
+- **PostgreSQL**: database as a backend.
