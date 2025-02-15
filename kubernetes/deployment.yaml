@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: trading-simulator
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: trading-simulator
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: trading-simulator
-        image: myregistry/trading-simulator:1.0
+        image: jamiecodes/trading-simulator:1.0
         ports:
         - containerPort: 8000
         env:
@@ -23,8 +23,14 @@ spec:
           value: "1"
         resources:
           requests:
-            memory: "64Mi"
-            cpu: "250m"
+            cpu: "100m"  # 0.1 CPU
+            memory: "128Mi"  # 128 MB RAM
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            cpu: "200m"  # 0.2 CPU
+            memory: "256Mi"  # 256 MB RAM
+    spec:
+        template:
+            spec:
+                nodeSelector:
+                    nodegroup: trading-nodes
+            
