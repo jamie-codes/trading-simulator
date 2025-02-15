@@ -100,7 +100,7 @@ The goal of this project is to:
    kubectl apply -f kubernetes/deployment.yaml
    kubectl apply -f kubernetes/service.yaml
 ```
-### **4: Configure `kubectl`**
+### **4. Configure `kubectl`**
 - `eksctl` should automatically configure `kubectl` to connect to your EKS cluster.
 - Verify the configuration:
   ```bash
