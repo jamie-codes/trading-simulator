@@ -17,7 +17,8 @@ spec:
       - name: trading-simulator
         image: jamiecodes/trading-simulator:1.0
         ports:
-        - containerPort: 8000
+        - containerPort: 5000  # Flask app port
+        - containerPort: 8000  # Prometheus metrics port
         env:
         - name: PROD
           value: "1"
