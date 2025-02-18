@@ -28,21 +28,22 @@ The goal of this project is to:
 
 ## **Project Structure**
 ```
-kubernetes-trading-simulator/
-├── README.md           # Updated project documentation
-├── trading-app/        # Python trading simulator code
-│ ├── app.py            # Updated Python application with structured logging
-│ ├── Dockerfile        # Dockerfile for containerizing the app
-│ └── requirements.txt  # Updated Python dependencies
-├── kubernetes/         # Kubernetes manifests
-│ ├── deployment.yaml   # Deployment for the trading app
-│ ├── service.yaml      # Service for the trading app
-│ └── hpa.yaml          # Horizontal Pod Autoscaler configuration
-└── monitoring/         # Prometheus and Grafana configurations
+
+trading-simulator/
+├── README.md # Updated project documentation
+├── trading-app/ # Python trading simulator code
+│ ├── app.py # Updated Python application with structured logging
+│ ├── Dockerfile # Dockerfile for containerizing the app
+│ └── requirements.txt # Updated Python dependencies
+├── kubernetes/ # Kubernetes manifests
+│ ├── deployment.yaml # Deployment for the trading app
+│ └── service.yaml # Service for the trading app
+└── monitoring/ # Prometheus and Grafana configurations
+  └── servicemonitor.yaml # Config to tell Prometheus where to scrape metrics
 ```
 
 ---
----
+
 
 ## **Setup Instructions**
 
