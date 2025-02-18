@@ -1,6 +1,6 @@
 # Kubernetes-Based Trading System Simulator
 
-This project demonstrates the deployment of a mock trading system on Kubernetes, with monitoring, logging, and auto-scaling features. It is designed to simulate a production-like environment using Kubernetes, Docker, free AWS tier, and monitoring tools.
+This project demonstrates the deployment of a mock trading system on Kubernetes, with monitoring, logging, and auto-scaling features. It is designed to simulate a production-like environment using Kubernetes, Docker, free AWS tier, and observability tools like Prometheus, Grafana, and the EFK Stack.
 
 ---
 
@@ -8,9 +8,10 @@ This project demonstrates the deployment of a mock trading system on Kubernetes,
 
 The goal of this project is to:
 1. Deploy a Python-based trading simulator on Kubernetes.
-2. Set up monitoring and logging to ensure system reliability.
-3. Implement auto-scaling to handle varying workloads.
-4. Simulate high trading activity and optimize system performance.
+2. Set up monitoring using Prometheus and Grafana to ensure system reliability.
+3. Implement centralized logging using the EFK Stack (Elasticsearch, Fluentd, Kibana).
+4. Implement auto-scaling to handle varying workloads.
+5. Simulate high trading activity and optimize system performance.
 
 ---
 
@@ -20,7 +21,26 @@ The goal of this project is to:
 - **AWS EKS/EC2**: For hosting the Kubernetes cluster.
 - **Docker**: For containerizing the trading application.
 - **Python**: For the trading simulator.
+- **Prometheus & Grafana**: For monitoring system performance.
+- **EFK Stack**: For centralized logging (Elasticsearch, Fluentd, Kibana).
 
+---
+
+## **Project Structure**
+```
+kubernetes-trading-simulator/
+├── README.md # Updated project documentation
+├── trading-app/ # Python trading simulator code
+│ ├── app.py # Updated Python application with structured logging
+│ ├── Dockerfile # Dockerfile for containerizing the app
+│ └── requirements.txt # Updated Python dependencies
+├── kubernetes/ # Kubernetes manifests
+│ ├── deployment.yaml # Deployment for the trading app
+│ └── service.yaml # Service for the trading app
+└── monitoring/ # Prometheus and Grafana configurations
+```
+
+---
 ---
 
 ## **Setup Instructions**
@@ -108,9 +128,10 @@ The goal of this project is to:
 
 ---
 
-## **To be added (14/02/2025)**
+## **To be added (18/02/2025)**
 
 - **Prometheus & Grafana**: For monitoring system performance.
 - **Fluentd/EFK Stack**: For centralized logging.
 - **Helm**: For deploying monitoring tools.
+- **Terraform**: For infrastructure as code (IaC) deployment.
 - **PostgreSQL**: database as a backend.
