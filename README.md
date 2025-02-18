@@ -28,7 +28,7 @@ The goal of this project is to:
 
 ## **Project Structure**
 ```
-kubernetes-trading-simulator/
+trading-simulator/
 ├── README.md # Updated project documentation
 ├── trading-app/ # Python trading simulator code
 │ ├── app.py # Updated Python application with structured logging
@@ -38,6 +38,7 @@ kubernetes-trading-simulator/
 │ ├── deployment.yaml # Deployment for the trading app
 │ └── service.yaml # Service for the trading app
 └── monitoring/ # Prometheus and Grafana configurations
+  └── servicemonitor.yaml # Config to tell Prometheus where to scrape metrics
 ```
 
 ---
