@@ -1,0 +1,29 @@
+service:
+  type: LoadBalancer
+
+adminUser: admin
+adminPassword: obfuscated  # not a real password
+
+persistence:
+  enabled: true
+  storageClassName: "gp2"
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+      access: proxy
+      isDefault: true
+
+dashboards:
+  default:
+    trading-app-dashboard:
+      gnetId: aedg6f4y3fnk0e  
+      revision: 1
+      datasource: Prometheus
