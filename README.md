@@ -28,6 +28,7 @@ The goal of this project is to:
 
 ## **Project Structure**
 ```
+
 trading-simulator/
 ├── README.md # Updated project documentation
 ├── trading-app/ # Python trading simulator code
@@ -42,7 +43,7 @@ trading-simulator/
 ```
 
 ---
----
+
 
 ## **Setup Instructions**
 
@@ -120,6 +121,7 @@ trading-simulator/
  ```
    kubectl apply -f kubernetes/deployment.yaml
    kubectl apply -f kubernetes/service.yaml
+   kubectl apply -f kubernetes/hpa.yaml
 ```
 ### **4. Configure `kubectl`**
 - `eksctl` should automatically configure `kubectl` to connect to your EKS cluster.
