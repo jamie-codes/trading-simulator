@@ -29,15 +29,16 @@ The goal of this project is to:
 ## **Project Structure**
 ```
 kubernetes-trading-simulator/
-├── README.md # Updated project documentation
-├── trading-app/ # Python trading simulator code
-│ ├── app.py # Updated Python application with structured logging
-│ ├── Dockerfile # Dockerfile for containerizing the app
-│ └── requirements.txt # Updated Python dependencies
-├── kubernetes/ # Kubernetes manifests
-│ ├── deployment.yaml # Deployment for the trading app
-│ └── service.yaml # Service for the trading app
-└── monitoring/ # Prometheus and Grafana configurations
+├── README.md           # Updated project documentation
+├── trading-app/        # Python trading simulator code
+│ ├── app.py            # Updated Python application with structured logging
+│ ├── Dockerfile        # Dockerfile for containerizing the app
+│ └── requirements.txt  # Updated Python dependencies
+├── kubernetes/         # Kubernetes manifests
+│ ├── deployment.yaml   # Deployment for the trading app
+│ ├── service.yaml      # Service for the trading app
+│ └── hpa.yaml          # Horizontal Pod Autoscaler configuration
+└── monitoring/         # Prometheus and Grafana configurations
 ```
 
 ---
@@ -119,6 +120,7 @@ kubernetes-trading-simulator/
  ```
    kubectl apply -f kubernetes/deployment.yaml
    kubectl apply -f kubernetes/service.yaml
+   kubectl apply -f kubernetes/hpa.yaml
 ```
 ### **4. Configure `kubectl`**
 - `eksctl` should automatically configure `kubectl` to connect to your EKS cluster.
