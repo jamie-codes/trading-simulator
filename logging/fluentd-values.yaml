@@ -1,0 +1,15 @@
+elasticsearch:
+  host: "elasticsearch-master.logging.svc.cluster.local"
+  port: 9200
+
+config:
+  outputs: |
+    <match **>
+      @type elasticsearch
+      host "#{ENV['FLUENT_ELASTICSEARCH_HOST']}"
+      port "#{ENV['FLUENT_ELASTICSEARCH_PORT']}"
+      logstash_format true
+      logstash_prefix logstash
+      include_tag_key true
+      type_name fluentd
+    </match>

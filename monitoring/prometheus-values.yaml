@@ -1,0 +1,17 @@
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {}
+    serviceMonitorNamespaceSelector: {}
+
+alertmanager:
+  enabled: false  # Disable Alertmanager for simplicity
+
+nodeExporter:
+  enabled: false  # Disable Node Exporter for simplicity
+
+kubeStateMetrics:
+  enabled: false  # Disable Kube State Metrics for simplicity
+
+pushgateway:
+  enabled: false  # Disable Pushgateway for simplicity

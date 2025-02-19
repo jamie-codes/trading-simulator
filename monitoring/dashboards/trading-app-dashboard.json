@@ -1,0 +1,50 @@
+{
+    "dashboard": {
+      "id": null,
+      "uid": "trading-app-dashboard",
+      "title": "Trading App Dashboard",
+      "tags": ["trading", "kubernetes"],
+      "timezone": "browser",
+      "schemaVersion": 22,
+      "version": 1,
+      "refresh": "10s",
+      "panels": [
+        {
+          "id": 1,
+          "type": "graph",
+          "title": "Trades Total",
+          "gridPos": {
+            "x": 0,
+            "y": 0,
+            "w": 12,
+            "h": 8
+          },
+          "targets": [
+            {
+              "expr": "rate(trades_total[1m])",
+              "legendFormat": "Trades Total",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "graph",
+          "title": "Trades in Progress",
+          "gridPos": {
+            "x": 12,
+            "y": 0,
+            "w": 12,
+            "h": 8
+          },
+          "targets": [
+            {
+              "expr": "trades_in_progress",
+              "legendFormat": "Trades in Progress",
+              "refId": "A"
+            }
+          ]
+        }
+      ]
+    }
+  }
