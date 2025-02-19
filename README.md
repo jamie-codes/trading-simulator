@@ -30,16 +30,23 @@ The goal of this project is to:
 ```
 
 trading-simulator/
-├── README.md # Updated project documentation
-├── trading-app/ # Python trading simulator code
-│ ├── app.py # Updated Python application with structured logging
-│ ├── Dockerfile # Dockerfile for containerizing the app
-│ └── requirements.txt # Updated Python dependencies
-├── kubernetes/ # Kubernetes manifests
-│ ├── deployment.yaml # Deployment for the trading app
-│ └── service.yaml # Service for the trading app
-└── monitoring/ # Prometheus and Grafana configurations
-  └── servicemonitor.yaml # Config to tell Prometheus where to scrape metrics
+├── README.md                         # Updated project documentation
+├── trading-app/                      # Python trading simulator code
+│ ├── app.py                          # Updated Python application with structured logging
+│ ├── Dockerfile                      # Dockerfile for containerizing the app
+│ └── requirements.txt                # Updated Python dependencies
+├── kubernetes/                       # Kubernetes manifests
+│ ├── deployment.yaml                 # Deployment for the trading app
+│ └── service.yaml                    # Service for the trading app
+├── monitoring/                       # Prometheus and Grafana configurations
+│ ├── prometheus-values.yaml          # Custom values for Prometheus Helm chart
+│ ├── grafana-values.yaml             # Custom values for Grafana Helm chart
+│ ├── ServiceMonitor.yaml             # Config to tell Prometheus where to scrape metrics
+│ └── dashboards/                     # Grafana dashboard config
+│   └── trading-app-dashboard.json  
+└── logging/                          # Fluentd configurations
+  ├── fluentd-values.yaml             # Custom values for Fluentd Helm chart
+  └── fluentd-config.yaml             # Custom Fluentd configuration
 ```
 
 ---
