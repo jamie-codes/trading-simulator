@@ -164,7 +164,29 @@ trading-simulator/
      ```
 
 4. **Verify the Setup**:
-   - Access Prometheus, Grafana, and Kibana as described above.
+   - Access Prometheus:
+     ```bash
+     kubectl port-forward svc/prometheus-kube-prometheus-prometheus 9090 -n monitoring
+     ```
+     Open `http://localhost:9090` in your browser.
+
+   - Access Grafana:
+     - Get the Grafana admin password:
+       ```bash
+       kubectl get secret grafana -o jsonpath="{.data.admin-password}" -n monitoring | base64 --decode
+       ```
+     - Port-forward the Grafana service:
+       ```bash
+       kubectl port-forward svc/grafana 3000 -n monitoring
+       ```
+     - Open `http://localhost:3000` in your browser and log in with the username `admin` and the password from the previous step.
+
+   - Access Kibana:
+     - Get the Kibana load balancer URL:
+       ```bash
+       kubectl get svc kibana -n logging -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"
+       ```
+     - Open the URL in your browser.
 ---
 
 ## **To be added (20/02/2025)**
