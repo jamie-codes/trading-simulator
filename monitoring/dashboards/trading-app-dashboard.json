@@ -12,7 +12,7 @@
         {
           "id": 1,
           "type": "graph",
-          "title": "Trades Total",
+          "title": "Total Trades (per second)",
           "gridPos": {
             "x": 0,
             "y": 0,
@@ -29,7 +29,7 @@
         },
         {
           "id": 2,
-          "type": "graph",
+          "type": "gauge",
           "title": "Trades in Progress",
           "gridPos": {
             "x": 12,
@@ -41,6 +41,42 @@
             {
               "expr": "trades_in_progress",
               "legendFormat": "Trades in Progress",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "type": "graph",
+          "title": "CPU Usage",
+          "gridPos": {
+            "x": 0,
+            "y": 8,
+            "w": 12,
+            "h": 8
+          },
+          "targets": [
+            {
+              "expr": "rate(container_cpu_usage_seconds_total{container='trading-app'}[1m])",
+              "legendFormat": "CPU Usage",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "type": "graph",
+          "title": "Memory Usage",
+          "gridPos": {
+            "x": 12,
+            "y": 8,
+            "w": 12,
+            "h": 8
+          },
+          "targets": [
+            {
+              "expr": "container_memory_usage_bytes{container='trading-app'}",
+              "legendFormat": "Memory Usage",
               "refId": "A"
             }
           ]
