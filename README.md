@@ -141,6 +141,30 @@ trading-simulator/
   ```bash
   kubectl config current-context
 
+### **5. Set Up Monitoring and Logging**
+1. **Prometheus**:
+   - Run the script to set up Prometheus:
+     ```bash
+     chmod +x scripts/setup-prometheus.sh
+     ./scripts/setup-prometheus.sh
+     ```
+
+2. **Grafana**:
+   - Run the script to set up Grafana:
+     ```bash
+     chmod +x scripts/setup-grafana.sh
+     ./scripts/setup-grafana.sh
+     ```
+
+3. **EFK Stack**:
+   - Run the script to set up the EFK Stack:
+     ```bash
+     chmod +x scripts/setup-efk.sh
+     ./scripts/setup-efk.sh
+     ```
+
+4. **Verify the Setup**:
+   - Access Prometheus, Grafana, and Kibana as described above.
 ---
 
 ## **To be added (20/02/2025)**
