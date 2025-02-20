@@ -23,6 +23,7 @@ The goal of this project is to:
 - **Python**: For the trading simulator.
 - **Prometheus & Grafana**: For monitoring system performance.
 - **EFK Stack**: For centralized logging (Elasticsearch, Fluentd, Kibana).
+- **Helm**: For deploying monitoring tools.
 
 ---
 
@@ -44,9 +45,13 @@ trading-simulator/
 │ ├── ServiceMonitor.yaml             # Config to tell Prometheus where to scrape metrics
 │ └── dashboards/                     # Grafana dashboard config
 │   └── trading-app-dashboard.json  
-└── logging/                          # Fluentd configurations
-  ├── fluentd-values.yaml             # Custom values for Fluentd Helm chart
-  └── fluentd-config.yaml             # Custom Fluentd configuration
+├── logging/                          # Fluentd configurations
+│ ├── fluentd-values.yaml             # Custom values for Fluentd Helm chart
+│ └── fluentd-config.yaml             # Custom Fluentd configuration
+└──scripts/
+  ├── setup-prometheus.sh             # Script to set up Prometheus
+  ├── setup-grafana.sh                # Script to set up Grafana
+  └── setup-efk.sh                    # Script to set up the EFK Stack
 ```
 
 ---
@@ -138,10 +143,8 @@ trading-simulator/
 
 ---
 
-## **To be added (18/02/2025)**
+## **To be added (20/02/2025)**
 
-- **Prometheus & Grafana**: For monitoring system performance.
-- **Fluentd/EFK Stack**: For centralized logging.
-- **Helm**: For deploying monitoring tools.
 - **Terraform**: For infrastructure as code (IaC) deployment.
 - **PostgreSQL**: database as a backend.
+- **Load testing script**: to simulate high traffic for the trading-simulator.
