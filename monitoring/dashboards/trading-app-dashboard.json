@@ -57,7 +57,7 @@
           },
           "targets": [
             {
-              "expr": "rate(container_cpu_usage_seconds_total{container='trading-app'}[1m])",
+              "expr": "rate(container_cpu_usage_seconds_total{container='trading-simulator'}[1m])",
               "legendFormat": "CPU Usage",
               "refId": "A"
             }
@@ -75,7 +75,7 @@
           },
           "targets": [
             {
-              "expr": "container_memory_usage_bytes{container='trading-app'}",
+              "expr": "container_memory_usage_bytes{container='trading-simulator'}",
               "legendFormat": "Memory Usage",
               "refId": "A"
             }
