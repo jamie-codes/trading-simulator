@@ -49,6 +49,7 @@ trading-simulator/
 │ ├── fluentd-values.yaml             # Custom values for Fluentd Helm chart
 │ └── fluentd-config.yaml             # Custom Fluentd configuration
 └──scripts/
+  ├── load-test.sh                    # Script for load testing using `k6`
   ├── setup-prometheus.sh             # Script to set up Prometheus
   ├── setup-grafana.sh                # Script to set up Grafana
   └── setup-efk.sh                    # Script to set up the EFK Stack
@@ -187,10 +188,25 @@ trading-simulator/
        kubectl get svc kibana -n logging -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"
        ```
      - Open the URL in your browser.
+### **6. Load Testing**
+To simulate high traffic to help test the scalability of the trading simulator, use the load testing script:
+
+1. **Install k6**:
+   - For Linux:
+     ```bash
+     sudo apt-get install k6
+     ```
+
+2. **Run the Load Test**:
+   - Run the load test script:
+     ```bash
+     chmod +x scripts/load-test.sh
+     ./scripts/load-test.sh
+     ```
+
 ---
 
 ## **To be added (20/02/2025)**
 
 - **Terraform**: For infrastructure as code (IaC) deployment.
 - **PostgreSQL**: database as a backend.
-- **Load testing script**: to simulate high traffic for the trading-simulator.
