@@ -192,7 +192,7 @@ trading-simulator/
 ### **6. Terraform Setup**
 Terraform is used to automate the setup of the EKS cluster, Prometheus, Grafana, and the EFK Stack. Below details the setup of this part:
 
-#### **1. Install Terraform**
+1. **Install Terraform**:
 ```
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
@@ -203,20 +203,20 @@ Verify the installation:
 terraform --version
 ```
 
-#### **2. Initialize Terraform**
+2. **Initialize Terraform**:
 Navigate to the terraform directory and initialize Terraform to download the required providers:
 ```
 cd terraform
 terraform init
 ```
 
-#### **3. Apply the Terraform Configuration**
+3. **Apply the Terraform Configuration**
 Apply the Terraform configuration to create the EKS cluster
 ```
 terraform apply
 ```
 
-#### **4. Verify the Setup**
+4. **Verify the Setup**
 - *EKS Cluster*:
   Verify that the EKS cluster is running:
      ```bash
