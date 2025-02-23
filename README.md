@@ -39,7 +39,7 @@ trading-simulator/
 ├── kubernetes/                       # Kubernetes manifests
 │ ├── deployment.yaml                 # Deployment for the trading app
 │ └── service.yaml                    # Service for the trading app
-├──terraform/                         # Terraform configuration files          
+├── terraform/                        # Terraform configuration files          
 │ ├── provider.tf                     # AWS and Kubernetes providers
 │ ├── eks-cluster.tf                  # EKS cluster setup
 │ └── outputs.tf                      # Outputs for load balancer URLs
