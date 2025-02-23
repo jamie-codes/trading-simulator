@@ -188,7 +188,43 @@ trading-simulator/
        kubectl get svc kibana -n logging -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"
        ```
      - Open the URL in your browser.
-### **6. Load Testing**
+
+### **6. Terraform Setup**
+Terraform is used to automate the setup of the EKS cluster, Prometheus, Grafana, and the EFK Stack. Below details the setup of this part:
+
+#### **1. Install Terraform**
+```
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt-get update && sudo apt-get install terraform
+```
+Verify the installation:
+```
+terraform --version
+```
+
+#### **2. Initialize Terraform**
+Navigate to the terraform directory and initialize Terraform to download the required providers:
+```
+cd terraform
+terraform init
+```
+
+#### **3. Apply the Terraform Configuration**
+Apply the Terraform configuration to create the EKS cluster
+```
+terraform apply
+```
+
+#### **4. Verify the Setup**
+- *EKS Cluster*:
+  Verify that the EKS cluster is running:
+     ```bash
+     kubectl get nodes
+     ```
+     Open `http://localhost:9090` in your browser.
+
+### **7. Load Testing**
 To simulate high traffic to help test the scalability of the trading simulator, use the load testing script:
 
 1. **Install k6**:

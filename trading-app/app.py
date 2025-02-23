@@ -6,6 +6,7 @@ from prometheus_client import start_http_server, Counter, Gauge
 import logging
 from pythonjsonlogger import jsonlogger
 
+
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -56,13 +57,23 @@ def generate_trading_activity():
 # REST API Endpoints
 @app.route("/trades", methods=["GET"])
 def get_trades():
-    logger.info("Fetching all trades")
-    return jsonify(trading_activity)
+    try:
+        logger.info("Fetching all trades")
+        return jsonify(trading_activity)
+    except Exception as e:
+        logger.error(f"Error fetching trades: {e}", exc_info=True)
+        return jsonify({"error": "Internal Server Error"}), 500
 
 @app.route("/health", methods=["GET"])
 def health_check():
     logger.info("Health check endpoint called")
     return jsonify({"status": "healthy"})
+
+@app.route("/ready", methods=["GET"])
+def readiness_check():
+    logger.info("Readiness check endpoint called")
+    # Add logic to check if the app is ready (e.g., database connection)
+    return jsonify({"status": "ready"})
 
 if __name__ == "__main__":
     # Start Prometheus metrics server on port 8000

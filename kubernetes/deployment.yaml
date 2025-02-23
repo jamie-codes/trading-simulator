@@ -34,4 +34,17 @@ spec:
             spec:
                 nodeSelector:
                     nodegroup: trading-nodes
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 5000
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 5000
+  initialDelaySeconds: 5
+  periodSeconds: 10
             
