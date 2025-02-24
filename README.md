@@ -24,6 +24,7 @@ The goal of this project is to:
 - **Prometheus & Grafana**: For monitoring system performance.
 - **EFK Stack**: For centralized logging (Elasticsearch, Fluentd, Kibana).
 - **Helm**: For deploying monitoring tools.
+- **Terraform**: For infrastructure as code (IaC) deployment.
 
 ---
 
@@ -44,6 +45,7 @@ trading-simulator/
 │ ├── eks-cluster.tf                  # EKS cluster setup
 │ ├── prometheus.tf                   # Prometheus Helm chart
 │ ├── grafana.tf                      # Grafana Helm chart
+│ ├── efk.tf                          # EFK Stack (Elasticsearch, Fluentd, Kibana)
 │ └── outputs.tf                      # Outputs for load balancer URLs
 ├── monitoring/                       # Prometheus and Grafana configurations
 │ ├── prometheus-values.yaml          # Custom values for Prometheus Helm chart
@@ -55,10 +57,10 @@ trading-simulator/
 │ ├── fluentd-values.yaml             # Custom values for Fluentd Helm chart
 │ └── fluentd-config.yaml             # Custom Fluentd configuration
 └──scripts/
-  ├── load-test.sh                    # Script for load testing using `k6`
-  ├── setup-prometheus.sh             # Script to set up Prometheus
-  ├── setup-grafana.sh                # Script to set up Grafana
-  └── setup-efk.sh                    # Script to set up the EFK Stack
+  ├── load-test.sh                    # Simulates high traffic for the trading application using `k6`.
+  ├── setup-prometheus.sh             # Deploys Prometheus using Helm.
+  ├── setup-grafana.sh                # Deploys Grafana using Helm.
+  └── setup-efk.sh                    # Deploys the EFK Stack (Elasticsearch, Fluentd, Kibana) using Helm.
 ```
 
 ---
@@ -72,22 +74,9 @@ trading-simulator/
    - Follow steps here: [install kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
 - `helm` installed.
    - Follow steps here: [install Helm charts](https://docs.aws.amazon.com/eks/latest/userguide/helm.html)
-- Docker installed.
- ```
-   sudo yum update
-   sudo yum search docker
-   sudo yum info docker
-   sudo yum install docker
-   # Add group membership to all to run all docker commands
-   sudo usermod -a -G docker ec2-user
-   id ec2-user
-   # Reload a Linux user's group assignments to docker w/o logout
-   newgrp docker
-   # Enable docker service at boot time
-   sudo systemctl enable docker.service
-   # Start the Docker service
-   sudo systemctl start docker.service
-```
+- `Docker` installed.
+  - Follow steps here: [Install Docker](https://docs.docker.com/get-docker/).
+
 
 ### **2. Set Up Kubernetes Cluster**
   - Create an EKS cluster using the AWS Management Console or `eksctl`.
@@ -142,13 +131,20 @@ trading-simulator/
    kubectl apply -f kubernetes/service.yaml
    kubectl apply -f kubernetes/hpa.yaml
 ```
-### **4. Configure `kubectl`**
+### **4. Access the Trading Simulator**
+1. Get the load balancer URL for the trading simulator:
+   ```bash
+   kubectl get svc trading-app-service -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"
+   ```
+2. Open the URL in your browser to access the trading simulator. 
+
+### **5. Configure `kubectl`**
 - `eksctl` should automatically configure `kubectl` to connect to your EKS cluster.
 - Verify the configuration:
   ```bash
   kubectl config current-context
 
-### **5. Set Up Monitoring and Logging**
+### **6. Set Up Monitoring and Logging**
 1. **Prometheus**:
    - Run the script to set up Prometheus:
      ```bash
@@ -195,7 +191,7 @@ trading-simulator/
        ```
      - Open the URL in your browser.
 
-### **6. Terraform Setup**
+### **7. Terraform Setup**
 Terraform is used to automate the setup of the EKS cluster, Prometheus, Grafana, and the EFK Stack. Below details the setup of this part:
 
 1. **Install Terraform**:
@@ -237,7 +233,7 @@ terraform apply
      Open `http://localhost:9090` in your browser.
 
 - *Grafana*:
-  Get the Grafana admin password::     
+  Get the Grafana admin password:     
      ```bash
      kubectl get secret grafana -o jsonpath="{.data.admin-password}" -n monitoring | base64 --decode
      ```
@@ -247,9 +243,35 @@ terraform apply
      ```
      Open http://localhost:3000 in your browser.
 
+- *EFK Stack*:
+  Step 1: Access Kibana
+    Get the Kibana load balancer URL:
+     ```bash
+     terraform output kibana_load_balancer_url
+     ```
+  Open the URL in your browser.
+  Log in to Kibana.
+  Configure an index pattern to start visualising logs.
+    - Create an index pattern for logstash under *Stack Management > Index Patterns*
 
-### **7. Load Testing**
-To simulate high traffic to help test the scalability of the trading simulator, use the load testing script:
+  Step 2: Verify Elasticsearch
+    Check the Elasticsearch endpoint:
+     ```bash
+     terraform output elasticsearch_endpoint
+     ```
+     Use `curl` or a browser to verify Elasticsearch is running:
+     ```bash
+     curl http://elasticsearch-master.logging.svc.cluster.local:9200
+     ```
+  Step 3: Verify Fluentd
+    Check the Fluentd logs:
+    ```bash
+     kubectl logs -l app=fluentd -n logging
+     ```
+     Ensure Fluentd is sending logs to Elasticsearch.
+
+### **8. Load Testing**
+To simulate high traffic for the trading simulator, use the `load-test.sh` script. This script uses **k6** to send a high volume of requests to the trading simulator and measures its performance under load.
 
 1. **Install k6**:
    - For Linux:
@@ -264,9 +286,16 @@ To simulate high traffic to help test the scalability of the trading simulator, 
      ./scripts/load-test.sh
      ```
 
+3. **Check Results**:
+   - The script will output metrics like:
+     - **Requests per second (RPS)**: The number of requests handled per second.
+     - **Error rate**: The percentage of failed requests.
+     - **Latency**: The average response time.
+   - We can use these metrics to identify performance bottlenecks and optimize the system.
 ---
 
-## **To be added (20/02/2025)**
+### **9. Future Additions**
 
-- **Terraform**: For infrastructure as code (IaC) deployment.
-- **PostgreSQL**: database as a backend.
+- **PostgreSQL**: A PostgreSQL database will be added as a backend for the trading simulator to store trade history and other persistent data.
+- The database will be deployed using a StatefulSet in Kubernetes.
+- The trading application will be updated to read and write data from the database instead of using in-memory storage.
