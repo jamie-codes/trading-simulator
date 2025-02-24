@@ -42,6 +42,8 @@ trading-simulator/
 ├── terraform/                        # Terraform configuration files          
 │ ├── provider.tf                     # AWS and Kubernetes providers
 │ ├── eks-cluster.tf                  # EKS cluster setup
+│ ├── prometheus.tf                   # Prometheus Helm chart
+│ ├── grafana.tf                      # Grafana Helm chart
 │ └── outputs.tf                      # Outputs for load balancer URLs
 ├── monitoring/                       # Prometheus and Grafana configurations
 │ ├── prometheus-values.yaml          # Custom values for Prometheus Helm chart
@@ -226,7 +228,25 @@ terraform apply
      ```bash
      kubectl get nodes
      ```
+
+- *Prometheus*:
+  Access Prometheus:     
+     ```bash
+     kubectl port-forward svc/prometheus-kube-prometheus-prometheus 9090 -n monitoring
+     ```
      Open `http://localhost:9090` in your browser.
+
+- *Grafana*:
+  Get the Grafana admin password::     
+     ```bash
+     kubectl get secret grafana -o jsonpath="{.data.admin-password}" -n monitoring | base64 --decode
+     ```
+     Port-forward the Grafana service:
+     ```bash
+     kubectl port-forward svc/grafana 3000 -n monitoring
+     ```
+     Open http://localhost:3000 in your browser.
+
 
 ### **7. Load Testing**
 To simulate high traffic to help test the scalability of the trading simulator, use the load testing script:
