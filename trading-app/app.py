@@ -72,7 +72,7 @@ def health_check():
 @app.route("/ready", methods=["GET"])
 def readiness_check():
     logger.info("Readiness check endpoint called")
-    # Add logic to check if the app is ready (e.g., database connection)
+    # TODO: Add logic to check if the app is ready (e.g., database connection (once added))
     return jsonify({"status": "ready"})
 
 if __name__ == "__main__":
