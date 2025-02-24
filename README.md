@@ -24,6 +24,7 @@ The goal of this project is to:
 - **Prometheus & Grafana**: For monitoring system performance.
 - **EFK Stack**: For centralized logging (Elasticsearch, Fluentd, Kibana).
 - **Helm**: For deploying monitoring tools.
+- **Terraform**: For infrastructure as code (IaC) deployment.
 
 ---
 
@@ -44,6 +45,7 @@ trading-simulator/
 │ ├── eks-cluster.tf                  # EKS cluster setup
 │ ├── prometheus.tf                   # Prometheus Helm chart
 │ ├── grafana.tf                      # Grafana Helm chart
+│ ├── efk.tf                          # EFK Stack (Elasticsearch, Fluentd, Kibana)
 │ └── outputs.tf                      # Outputs for load balancer URLs
 ├── monitoring/                       # Prometheus and Grafana configurations
 │ ├── prometheus-values.yaml          # Custom values for Prometheus Helm chart
@@ -237,7 +239,7 @@ terraform apply
      Open `http://localhost:9090` in your browser.
 
 - *Grafana*:
-  Get the Grafana admin password::     
+  Get the Grafana admin password:     
      ```bash
      kubectl get secret grafana -o jsonpath="{.data.admin-password}" -n monitoring | base64 --decode
      ```
@@ -247,6 +249,32 @@ terraform apply
      ```
      Open http://localhost:3000 in your browser.
 
+- *EFK Stack*:
+  Step 1: Access Kibana
+    Get the Kibana load balancer URL:
+     ```bash
+     terraform output kibana_load_balancer_url
+     ```
+  Open the URL in your browser.
+  Log in to Kibana.
+  Configure an index pattern to start visualising logs.
+    - Create an index pattern for logstash under *Stack Management > Index Patterns*
+
+  Step 2: Verify Elasticsearch
+    Check the Elasticsearch endpoint:
+     ```bash
+     terraform output elasticsearch_endpoint
+     ```
+     Use `curl` or a browser to verify Elasticsearch is running:
+     ```bash
+     curl http://elasticsearch-master.logging.svc.cluster.local:9200
+     ```
+  Step 3: Verify Fluentd
+    Check the Fluentd logs:
+    ```bash
+     kubectl logs -l app=fluentd -n logging
+     ```
+     Ensure Fluentd is sending logs to Elasticsearch.
 
 ### **7. Load Testing**
 To simulate high traffic to help test the scalability of the trading simulator, use the load testing script:
@@ -268,5 +296,4 @@ To simulate high traffic to help test the scalability of the trading simulator, 
 
 ## **To be added (20/02/2025)**
 
-- **Terraform**: For infrastructure as code (IaC) deployment.
-- **PostgreSQL**: database as a backend.
+- **PostgreSQL**: database as a backend. 
