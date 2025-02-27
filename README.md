@@ -270,7 +270,27 @@ terraform apply
      ```
      Ensure Fluentd is sending logs to Elasticsearch.
 
-### **8. Load Testing**
+### **8. Add PostgreSQL Database**
+To add the PostgreSQL database as a backend for the trading simulator:
+
+1. **Deploy PostgreSQL**:
+   ```bash
+   kubectl apply -f kubernetes/postgresql-deployment.yaml
+   kubectl apply -f kubernetes/postgresql-pvc.yaml
+   kubectl apply -f kubernetes/postgresql-service.yaml
+   ``` 
+
+2. **Verify the Setup**:
+Connect to the PostgreSQL pod:
+   ```bash
+   kubectl exec -it <postgresql-pod-name> -- psql -U user -d trading
+   ```
+Check if the `trades` table exists:
+   ```sql
+   \dt
+   ```
+
+### **9. Load Testing**
 To simulate high traffic for the trading simulator, use the `load-test.sh` script. This script uses **k6** to send a high volume of requests to the trading simulator and measures its performance under load.
 
 1. **Install k6**:
@@ -292,9 +312,11 @@ To simulate high traffic for the trading simulator, use the `load-test.sh` scrip
      - **Error rate**: The percentage of failed requests.
      - **Latency**: The average response time.
    - We can use these metrics to identify performance bottlenecks and optimize the system.
+
+
 ---
 
-### **9. Future Additions**
+### **10. Future Additions**
 
 - **PostgreSQL**: A PostgreSQL database will be added as a backend for the trading simulator to store trade history and other persistent data.
 - The database will be deployed using a StatefulSet in Kubernetes.
