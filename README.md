@@ -39,11 +39,16 @@ trading-simulator/
 │ └── requirements.txt                # Updated Python dependencies
 ├── kubernetes/                       # Kubernetes manifests
 │ ├── deployment.yaml                 # Deployment for the trading app
+│ ├── postgresql-deployment.yaml      # Deployment for the PostgreSQL database
+│ ├── postgresql-pvc.yaml             # Persistent Volume Claim for PostgreSQL
+│ ├── postgresql-service.yaml         # Service for the PostgreSQL database
+│ ├── hpa.yaml                        # Horizontal Pod Autoscaler config
 │ └── service.yaml                    # Service for the trading app
 ├── terraform/                        # Terraform configuration files          
 │ ├── provider.tf                     # AWS and Kubernetes providers
 │ ├── eks-cluster.tf                  # EKS cluster setup
 │ ├── prometheus.tf                   # Prometheus Helm chart
+│ ├── postgresql.tf                   # PostgreSQL Helm chart
 │ ├── grafana.tf                      # Grafana Helm chart
 │ ├── efk.tf                          # EFK Stack (Elasticsearch, Fluentd, Kibana)
 │ └── outputs.tf                      # Outputs for load balancer URLs
