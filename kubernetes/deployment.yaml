@@ -20,8 +20,14 @@ spec:
         - containerPort: 5000  # Flask app port
         - containerPort: 8000  # Prometheus metrics port
         env:
-        - name: PROD
-          value: "1"
+        - name: POSTGRES_HOST
+          value: "postgresql"
+        - name: POSTGRES_DB
+          value: "trading"
+        - name: POSTGRES_USER
+          value: "user"
+        - name: POSTGRES_PASSWORD
+          value: "password"
         resources:
           requests:
             cpu: "100m"  # 0.1 CPU
