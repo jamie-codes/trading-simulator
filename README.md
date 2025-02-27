@@ -280,15 +280,35 @@ To add the PostgreSQL database as a backend for the trading simulator:
    kubectl apply -f kubernetes/postgresql-service.yaml
    ``` 
 
-2. **Verify the Setup**:
-Connect to the PostgreSQL pod:
+2. **Verify PostgreSQL**:
+Check if the PostgreSQL pod is running:
    ```bash
+   kubectl get pods -l app=postgresql
+   ```
+Access the PostgreSQL database:
+   ```sql
    kubectl exec -it <postgresql-pod-name> -- psql -U user -d trading
    ```
-Check if the `trades` table exists:
-   ```sql
-   \dt
-   ```
+
+3. **Update the Trading Simulator**:
+Rebuild and push the Docker image:
+  ```bash
+  docker build -t jamiecodes/trading-simulator:1.0 .
+  docker push jamiecodes/trading-simulator:1.0
+  ```
+
+Redeploy the trading application:
+  ```bash
+  kubectl apply -f kubernetes/deployment.yaml
+  ```
+
+4. **Verify the Setup**:
+Check if the trading application is connected to PostgreSQL:
+```bash
+kubectl logs <trading-app-pod-name>
+```
+(Alternatively check the logs on Kibana)
+
 
 ### **9. Load Testing**
 To simulate high traffic for the trading simulator, use the `load-test.sh` script. This script uses **k6** to send a high volume of requests to the trading simulator and measures its performance under load.
