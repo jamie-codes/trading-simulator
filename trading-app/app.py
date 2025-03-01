@@ -30,8 +30,14 @@ logger.addHandler(handler)
 TRADES_TOTAL = Counter("trades_total", "Total number of trades")
 TRADES_IN_PROGRESS = Gauge("trades_in_progress", "Number of trades in progress")
 
-# In-memory storage for trading activity
-trading_activity = []
+# Database connection
+def get_db_connection():
+    return psycopg2.connect(
+        host="postgresql",
+        database="trading",
+        user="user",
+        password="password"
+    )
 
 # Generate random trading activity
 def generate_trading_activity():
@@ -45,7 +51,17 @@ def generate_trading_activity():
             "quantity": random.randint(1, 100),
             "price": round(random.uniform(100, 500), 2)
         }
-        trading_activity.append(order)
+        # Insert trade into the database
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO trades (timestamp, action, symbol, quantity, price) VALUES (%s, %s, %s, %s, %s)",
+            (order["timestamp"], order["action"], order["symbol"], order["quantity"], order["price"])
+        )
+        conn.commit()
+        cur.close()
+        conn.close()
+
         TRADES_TOTAL.inc()
         TRADES_IN_PROGRESS.dec()
 
@@ -59,7 +75,13 @@ def generate_trading_activity():
 def get_trades():
     try:
         logger.info("Fetching all trades")
-        return jsonify(trading_activity)
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM trades")
+        trades = cur.fetchall()
+        cur.close()
+        conn.close()
+        return jsonify(trades)
     except Exception as e:
         logger.error(f"Error fetching trades: {e}", exc_info=True)
         return jsonify({"error": "Internal Server Error"}), 500
@@ -72,8 +94,16 @@ def health_check():
 @app.route("/ready", methods=["GET"])
 def readiness_check():
     logger.info("Readiness check endpoint called")
-    # TODO: Add logic to check if the app is ready (e.g., database connection (once added))
-    return jsonify({"status": "ready"})
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT 1")
+        cur.close()
+        conn.close()
+        return jsonify({"status": "ready"}), 200
+    except Exception as e:
+        logger.error(f"Database connection check failed: {e}", exc_info=True)
+        return jsonify({"status": "not ready"}), 503
 
 if __name__ == "__main__":
     # Start Prometheus metrics server on port 8000
