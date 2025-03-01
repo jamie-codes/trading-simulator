@@ -25,6 +25,7 @@ The goal of this project is to:
 - **EFK Stack**: For centralized logging (Elasticsearch, Fluentd, Kibana).
 - **Helm**: For deploying monitoring tools.
 - **Terraform**: For infrastructure as code (IaC) deployment.
+- **PostreSQL**:  a backend for the trading simulator to store trade history and other persistent data.
 
 ---
 
@@ -342,7 +343,15 @@ To simulate high traffic for the trading simulator, use the `load-test.sh` scrip
 ---
 
 ### **10. Future Additions**
+Some potential future additions that I will look into prioritising and implementing.:
 
-- **PostgreSQL**: A PostgreSQL database will be added as a backend for the trading simulator to store trade history and other persistent data.
-- The database will be deployed using a StatefulSet in Kubernetes.
-- The trading application will be updated to read and write data from the database instead of using in-memory storage.
+- **CI/CD Pipeline**: using tools like Jenkins, GitHub Actions, or ArgoCD to automate the build, test, and deployment process.
+- **Automated Testing**: add unit tests, integration tests, and end-to-end tests for the trading application, using a testing framework like pytest or unittest.
+- **Secrets Management**: Use HashiCorp Vault or AWS Secrets Manager to manage sensitive data (e.g., database credentials, API keys).
+- **Chaos Testing**: Use Chaos Mesh or Gremlin to simulate failures (e.g., pod crashes, network latency, database outages) and to test the system's resilience and recovery mechanisms.
+- **Custom Metrics**: Use Prometheus exporters or custom instrumentation in the Python application and add custom metrics to track certain values (e.g., trade volume, profit/loss, latency).
+- **Alerting**: enhance the existing alerting by setting up Prometheus Alertmanager to send alerts for critical conditions (e.g., high error rates, low trade volume).
+- **Real-Time Data**: Integrate with a real-time market data API (e.g., Alpha Vantage, Yahoo Finance) to simulate realistic trading scenarios. Use WebSockets or Kafka for real-time data streaming.
+- **User Interface**: Build a web-based dashboard using React or Vue.js to visualize trading activity, metrics, and logs. Integrate this with Grafana and Kibana for advanced visualizations.
+
+
