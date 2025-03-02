@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trading-dashboard
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trading-dashboard
+  template:
+    metadata:
+      labels:
+        app: trading-dashboard
+    spec:
+      containers:
+      - name: trading-dashboard
+        image: jamiecodes/trading-dashboard:1.0
+        ports:
+        - containerPort: 80
