@@ -83,10 +83,13 @@ trading-simulator/
 - `Docker` installed.
   - Follow steps here: [Install Docker](https://docs.docker.com/get-docker/).
 
+- **Python 3.8 or higher**: Ensure Python is installed and compatible with the trading simulator.
+- **Terraform v1.0 or higher**: Ensure Terraform is installed (see section 7 below) and compatible with the provided configurations.
+- **AWS Free Tier**: Be mindful of AWS Free Tier limits to avoid unexpected charges.
 
 ### **2. Set Up Kubernetes Cluster**
   - Create an EKS cluster using the AWS Management Console or `eksctl`.
-  - Configure `kubectl` to connect to your EKS cluster.
+  - Configure `kubectl` to connect to your EKS cluster. (if using `eksctl` then this is already done for you.)
 
 1. **Install `eksctl`**:
    - `eksctl` is a CLI tool for creating and managing EKS clusters.
@@ -107,6 +110,7 @@ trading-simulator/
      ```
 
 ### **3. Create an EKS Cluster**
+*Note that that users need to configure their AWS CLI with the correct credentials and region as per above before running eksctl.*
 1. **Create a Cluster**:
    - Use `eksctl` to create a cluster with default settings:
      ```bash
@@ -126,10 +130,12 @@ trading-simulator/
 
 ### **3. Deploy the Trading Simulator**
 1. Build the Docker image for the trading simulator:
+   Ensure you have a Docker Hub account or another container registry to push the image. 
+
    ```bash
    cd trading-simulator
-   docker build -t jamiecodes/trading-simulator:1.0 .
-   docker push jamiecodes/trading-simulator:1.0
+   docker build -t <your-dockerhub-username>/trading-simulator:1.0 .
+   docker push <your-dockerhub-username>/trading-simulator:1.0
      ```
 2. Deploy the application to Kubernetes
  ```
@@ -144,11 +150,9 @@ trading-simulator/
    ```
 2. Open the URL in your browser to access the trading simulator. 
 
-### **5. Configure `kubectl`**
-- `eksctl` should automatically configure `kubectl` to connect to your EKS cluster.
-- Verify the configuration:
-  ```bash
-  kubectl config current-context
+- **Load Balancer Propagation**:
+  It may take a few minutes for the load balancer URL to become available. If the URL is not immediately accessible, wait a few minutes and try again.
+
 
 ### **6. Set Up Monitoring and Logging**
 1. **Prometheus**:
@@ -276,6 +280,9 @@ terraform apply
      ```
      Ensure Fluentd is sending logs to Elasticsearch.
 
+5. **Clean Up Resources**:
+  - When you're done, use `terraform destroy` to clean up all resources and avoid unnecessary AWS charges.
+
 ### **8. Add PostgreSQL Database**
 To add the PostgreSQL database as a backend for the trading simulator:
 
@@ -299,8 +306,8 @@ Access the PostgreSQL database:
 3. **Update the Trading Simulator**:
 Rebuild and push the Docker image:
   ```bash
-  docker build -t jamiecodes/trading-simulator:1.0 .
-  docker push jamiecodes/trading-simulator:1.0
+  docker build -t <your-dockerhub-username>/trading-simulator:1.0 .
+  docker push <your-dockerhub-username>/trading-simulator:1.0
   ```
 
 Redeploy the trading application:
@@ -318,6 +325,9 @@ kubectl logs <trading-app-pod-name>
 
 ### **9. Load Testing**
 To simulate high traffic for the trading simulator, use the `load-test.sh` script. This script uses **k6** to send a high volume of requests to the trading simulator and measures its performance under load.
+
+- **Modify Load Test Parameters**:
+  You can adjust the number of virtual users or the duration of the test by modifying the `load-test.sh` script.
 
 1. **Install k6**:
    - For Linux:
