@@ -83,6 +83,9 @@ trading-simulator/
 - `Docker` installed.
   - Follow steps here: [Install Docker](https://docs.docker.com/get-docker/).
 
+- **Python 3.8 or higher**: Ensure Python is installed and compatible with the trading simulator.
+- **Terraform v1.0 or higher**: Ensure Terraform is installed (see section 7 below) and compatible with the provided configurations.
+- **AWS Free Tier**: Be mindful of AWS Free Tier limits to avoid unexpected charges.
 
 ### **2. Set Up Kubernetes Cluster**
   - Create an EKS cluster using the AWS Management Console or `eksctl`.
@@ -107,6 +110,7 @@ trading-simulator/
      ```
 
 ### **3. Create an EKS Cluster**
+*Note that that users need to configure their AWS CLI with the correct credentials and region as per above before running eksctl.*
 1. **Create a Cluster**:
    - Use `eksctl` to create a cluster with default settings:
      ```bash
@@ -126,10 +130,12 @@ trading-simulator/
 
 ### **3. Deploy the Trading Simulator**
 1. Build the Docker image for the trading simulator:
+   Ensure you have a Docker Hub account or another container registry to push the image. 
+
    ```bash
    cd trading-simulator
-   docker build -t jamiecodes/trading-simulator:1.0 .
-   docker push jamiecodes/trading-simulator:1.0
+   docker build -t <your-dockerhub-username>/trading-simulator:1.0 .
+   docker push <your-dockerhub-username>/trading-simulator:1.0
      ```
 2. Deploy the application to Kubernetes
  ```
@@ -299,8 +305,8 @@ Access the PostgreSQL database:
 3. **Update the Trading Simulator**:
 Rebuild and push the Docker image:
   ```bash
-  docker build -t jamiecodes/trading-simulator:1.0 .
-  docker push jamiecodes/trading-simulator:1.0
+  docker build -t <your-dockerhub-username>/trading-simulator:1.0 .
+  docker push <your-dockerhub-username>/trading-simulator:1.0
   ```
 
 Redeploy the trading application:
