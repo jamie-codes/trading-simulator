@@ -89,7 +89,7 @@ trading-simulator/
 
 ### **2. Set Up Kubernetes Cluster**
   - Create an EKS cluster using the AWS Management Console or `eksctl`.
-  - Configure `kubectl` to connect to your EKS cluster.
+  - Configure `kubectl` to connect to your EKS cluster. (if using `eksctl` then this is already done for you.)
 
 1. **Install `eksctl`**:
    - `eksctl` is a CLI tool for creating and managing EKS clusters.
@@ -150,11 +150,9 @@ trading-simulator/
    ```
 2. Open the URL in your browser to access the trading simulator. 
 
-### **5. Configure `kubectl`**
-- `eksctl` should automatically configure `kubectl` to connect to your EKS cluster.
-- Verify the configuration:
-  ```bash
-  kubectl config current-context
+- **Load Balancer Propagation**:
+  It may take a few minutes for the load balancer URL to become available. If the URL is not immediately accessible, wait a few minutes and try again.
+
 
 ### **6. Set Up Monitoring and Logging**
 1. **Prometheus**:
@@ -282,6 +280,9 @@ terraform apply
      ```
      Ensure Fluentd is sending logs to Elasticsearch.
 
+5. **Clean Up Resources**:
+  - When you're done, use `terraform destroy` to clean up all resources and avoid unnecessary AWS charges.
+
 ### **8. Add PostgreSQL Database**
 To add the PostgreSQL database as a backend for the trading simulator:
 
@@ -324,6 +325,9 @@ kubectl logs <trading-app-pod-name>
 
 ### **9. Load Testing**
 To simulate high traffic for the trading simulator, use the `load-test.sh` script. This script uses **k6** to send a high volume of requests to the trading simulator and measures its performance under load.
+
+- **Modify Load Test Parameters**:
+  You can adjust the number of virtual users or the duration of the test by modifying the `load-test.sh` script.
 
 1. **Install k6**:
    - For Linux:
